@@ -1,7 +1,42 @@
 <?php
-// ... (Kode PHP Insert biarkan sama) ...
+require_once '../../config/database.php';
 
-// Panggil Header
+// --- BAGIAN 1: LOGIC PHP ---
+
+// 1. Ambil data Penerbit & Kategori dari Database (INI YANG TADI HILANG)
+try {
+    $penerbit = $pdo->query("SELECT * FROM Penerbit ORDER BY nama_penerbit ASC")->fetchAll(PDO::FETCH_ASSOC);
+    $kategori = $pdo->query("SELECT * FROM Kategori_Buku ORDER BY nama_kategori ASC")->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Gagal mengambil data referensi: " . $e->getMessage());
+}
+
+// 2. Proses Simpan saat tombol ditekan
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        $sql = "INSERT INTO Buku (judul, pengarang, isbn, tahun_terbit, jumlah_stok, id_penerbit, id_kategori) 
+                VALUES (:judul, :pengarang, :isbn, :tahun, :stok, :penerbit, :kategori)";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':judul' => $_POST['judul'],
+            ':pengarang' => $_POST['pengarang'],
+            ':isbn' => $_POST['isbn'],
+            ':tahun' => $_POST['tahun_terbit'],
+            ':stok' => $_POST['jumlah_stok'],
+            ':penerbit' => $_POST['id_penerbit'],
+            ':kategori' => $_POST['id_kategori']
+        ]);
+
+        // Redirect balik ke list buku setelah sukses
+        echo "<script>alert('Buku berhasil ditambahkan!'); window.location='list_buku.php';</script>";
+        exit();
+    } catch (PDOException $e) {
+        $error = "Gagal menambah data: " . $e->getMessage();
+    }
+}
+
+// --- BAGIAN 2: TAMPILAN HTML ---
 include '../layouts/header.php';
 ?>
 
@@ -12,6 +47,11 @@ include '../layouts/header.php';
                 <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah Buku Baru</h5>
             </div>
             <div class="card-body p-4">
+                
+                <?php if(isset($error)): ?>
+                    <div class="alert alert-danger"><?= $error ?></div>
+                <?php endif; ?>
+
                 <form method="POST" action="">
                     
                     <div class="mb-3">
@@ -56,7 +96,7 @@ include '../layouts/header.php';
                         <select name="id_kategori" class="form-select" required>
                             <option value="">-- Pilih Kategori --</option>
                             <?php foreach($kategori as $k): ?>
-                                <option value="<?= $k['id_kategori'] ?>"><?= $k['nama_penerbit'] ?></option>
+                                <option value="<?= $k['id_kategori'] ?>"><?= $k['nama_kategori'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

@@ -1,11 +1,31 @@
 <?php
+// --- BAGIAN 1: LOGIC PHP (JANGAN DIHAPUS) ---
 require_once '../../config/database.php';
 
-// ... (Kode PHP Query SELECT biarkan sama persis seperti sebelumnya) ...
-// COPY KODINGAN PHP SELECT DI SINI
-// ... 
+// Cek sesi login (Opsional, biar aman)
+session_start();
+if (!isset($_SESSION['logged_in'])) {
+    header("Location: ../../login.php");
+    exit;
+}
 
-// Panggil Header Layout
+try {
+    // Query untuk mengambil data buku
+    $sql = "SELECT b.*, p.nama_penerbit, k.nama_kategori 
+            FROM Buku b
+            JOIN Penerbit p ON b.id_penerbit = p.id_penerbit
+            JOIN Kategori_Buku k ON b.id_kategori = k.id_kategori
+            ORDER BY b.id_buku ASC";
+            
+    $stmt = $pdo->query($sql);
+    // Hasil query disimpan ke variabel $daftar_buku
+    $daftar_buku = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch(PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
+
+// --- BAGIAN 2: TAMPILAN HTML (HEADER & TABLE) ---
 include '../layouts/header.php'; 
 ?>
 
@@ -69,6 +89,5 @@ include '../layouts/header.php';
 </div>
 
 <?php 
-// Panggil Footer Layout
 include '../layouts/footer.php'; 
 ?>
