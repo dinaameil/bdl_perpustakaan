@@ -1,16 +1,10 @@
 <?php
-// Cek apakah session sudah dimulai, kalau belum start
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Cek apakah user sudah login? Kalau belum, tendang ke login.php
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    // Arahkan path-nya mundur ke login.php (sesuaikan jumlah ../ tergantung posisi file)
-    // Karena header.php dipanggil oleh file di sub-folder, kita pakai logic absolut path atau check lokasi
-    
-    // Cara aman redirect dari folder manapun:
-    $base_url = "http://localhost/perpus_app/"; // Sesuaikan nama foldermu
+    $base_url = "http://localhost/perpus_app/";
     header("Location: " . $base_url . "login.php");
     exit;
 }
@@ -24,21 +18,17 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <title>Sistem Informasi Perpustakaan</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-
     <style>
-        /* --- 1. PALET WARNA MODERN --- */
         :root {
-            --sidebar-bg: #0f172a;         /* Biru Tua Keren (Midnight) */
-            --sidebar-hover: #1e293b;      /* Biru Tua sedikit terang buat hover */
-            --primary-color: #4361ee;      /* Biru Muda Kalem (Royal Blue) */
-            --primary-hover: #3a0ca3;      /* Biru hover */
-            --bg-light: #f8f9fa;           /* Background abu sangat muda */
-            --text-grey: #94a3b8;          /* Text menu yang tidak aktif */
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --primary-color: #4361ee;
+            --primary-hover: #3a0ca3;
+            --bg-light: #f8f9fa;
+            --text-grey: #94a3b8;
         }
 
         body { 
@@ -47,7 +37,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             color: #333;
         }
 
-        /* --- 2. SIDEBAR KEREN --- */
         .sidebar { 
             min-height: 100vh; 
             background-color: var(--sidebar-bg); 
@@ -71,19 +60,19 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             display: block; 
             font-weight: 500;
             transition: all 0.3s ease;
-            border-left: 4px solid transparent; /* Garis indikator tersembunyi */
+            border-left: 4px solid transparent;
         }
 
         .sidebar a:hover { 
             background: var(--sidebar-hover); 
             color: #fff; 
-            padding-left: 30px; /* Efek geser dikit pas hover */
+            padding-left: 30px;
         }
 
         .sidebar a.active { 
-            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1) 0%, transparent 100%); /* Gradasi halus */
+            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1) 0%, transparent 100%);
             color: #fff; 
-            border-left: 4px solid var(--primary-color); /* Garis biru muda di kiri */
+            border-left: 4px solid var(--primary-color);
         }
 
         .sidebar i { width: 25px; text-align: center; margin-right: 8px;}
@@ -97,7 +86,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             font-weight: 600;
         }
 
-        /* --- 3. KONTEN & CARD --- */
         .content { padding: 30px; width: 100%; }
         
         .card { 
@@ -107,18 +95,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             overflow: hidden;
         }
 
-        /* Mengganti warna Header Card jadi Biru Kalem */
         .card-header.bg-primary {
             background: var(--primary-color) !important; 
             border-bottom: none;
             padding: 15px 20px;
         }
 
-        /* --- 4. TOMBOL CUSTOM (Override Bootstrap) --- */
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
-            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3); /* Bayangan biru halus */
+            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
         }
         
         .btn-primary:hover {
@@ -129,9 +115,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.02); border-bottom: 1px solid #eee;}
 
         .sidebar .btn-danger {
-        color: #ffffff !important;
+            color: #ffffff !important;
         }
-
     </style>
 </head>
 <body>
@@ -157,15 +142,30 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             </a>
             
             <div class="menu-label">Sirkulasi</div>
-            <a href="../transaksi/peminjaman.php"><i class="fas fa-hand-holding"></i> Peminjaman</a>
-            <a href="../transaksi/pengembalian.php"><i class="fas fa-undo"></i> Pengembalian</a>
+            <a href="../transaksi/peminjaman.php" class="<?= strpos($_SERVER['PHP_SELF'], 'peminjaman') !== false ? 'active' : '' ?>">
+                <i class="fas fa-hand-holding"></i> Peminjaman
+            </a>
+            <a href="../transaksi/pengembalian.php" class="<?= strpos($_SERVER['PHP_SELF'], 'pengembalian') !== false ? 'active' : '' ?>">
+                <i class="fas fa-undo"></i> Pengembalian
+            </a>
             
-            <div class="menu-label">Laporan</div>
-            <a href="../laporan/rekap.php"><i class="fas fa-chart-pie"></i> Laporan Lengkap</a>
+            <div class="menu-label">Laporan & Database</div>
+            <a href="../laporan/function_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'function_demo') !== false ? 'active' : '' ?>">
+                <i class="fas fa-code"></i> Function & Procedure
+            </a>
+            <a href="../laporan/views_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'views_demo') !== false ? 'active' : '' ?>">
+                <i class="fas fa-eye"></i> Views Demo
+            </a>
+            <a href="../laporan/materialized_view.php" class="<?= strpos($_SERVER['PHP_SELF'], 'materialized_view') !== false ? 'active' : '' ?>">
+                <i class="fas fa-database"></i> Materialized View
+            </a>
+            <a href="../laporan/indexing_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'indexing_demo') !== false ? 'active' : '' ?>">
+                <i class="fas fa-bolt"></i> Indexing Demo
+            </a>
             
             <div class="mt-5 px-4 pb-4">
                 <a href="../../logout.php" class="btn btn-danger w-100 shadow-sm text-white" style="border-radius: 8px;">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
                 </a>
             </div>
         </nav>

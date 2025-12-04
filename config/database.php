@@ -1,10 +1,10 @@
 <?php
 
 $host = "localhost";
-$port = "5434";
-$dbname = "bd_perpustakaan";
+$port = "5433";
+$dbname = "db_perpustakaan";
 $user = "postgres";
-$password = "akuDina06";
+$password = "c";
 
 try {
     $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;";
