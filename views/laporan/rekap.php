@@ -16,6 +16,7 @@ if (isset($_POST['refresh_mv'])) {
 
 // A. Panggil STORED FUNCTION: hitung_total_denda()
 // Function ini sudah kita buat di SQL sebelumnya.
+// DI VS CODE, file rekap.php, BARIS 19 & 20
 $stmt = $pdo->query("SELECT hitung_total_denda()"); 
 $total_denda_live = $stmt->fetchColumn();
 
