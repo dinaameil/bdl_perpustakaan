@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    $base_url = "http://localhost/perpus_app/";
+    $base_url = "http://localhost/perpus_app/"; 
     header("Location: " . $base_url . "login.php");
     exit;
 }
@@ -22,6 +22,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* --- 1. PALET WARNA --- */
         :root {
             --sidebar-bg: #0f172a;
             --sidebar-hover: #1e293b;
@@ -35,13 +36,21 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             font-family: 'Poppins', sans-serif; 
             background-color: var(--bg-light); 
             color: #333;
+            overflow-x: hidden; /* Mencegah scroll ke samping */
         }
 
+        /* --- 2. SIDEBAR FIXED (DIAM DI TEMPAT) --- */
         .sidebar { 
-            min-height: 100vh; 
+            position: fixed;        /* KUNCI UTAMA: Agar sidebar mengambang/tetap */
+            top: 0; 
+            left: 0;
+            height: 100vh;          /* Tinggi full layar */
+            width: 260px;           /* Lebar tetap */
             background-color: var(--sidebar-bg); 
             color: white; 
-            box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+            overflow-y: auto;       /* Bisa discroll kalau menunya kepanjangan */
+            z-index: 1000;          /* Pastikan di atas layer lain */
+            transition: all 0.3s ease;
         }
 
         .sidebar .brand {
@@ -49,7 +58,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             font-weight: 700;
             font-size: 1.4rem;
             color: white;
-            letter-spacing: 1px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
@@ -59,20 +67,20 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             padding: 14px 25px; 
             display: block; 
             font-weight: 500;
-            transition: all 0.3s ease;
             border-left: 4px solid transparent;
+            transition: all 0.3s;
         }
 
         .sidebar a:hover { 
             background: var(--sidebar-hover); 
             color: #fff; 
-            padding-left: 30px;
+            padding-left: 30px; 
         }
 
         .sidebar a.active { 
-            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(67, 97, 238, 0.1) 0%, transparent 100%); 
             color: #fff; 
-            border-left: 4px solid var(--primary-color);
+            border-left: 4px solid var(--primary-color); 
         }
 
         .sidebar i { width: 25px; text-align: center; margin-right: 8px;}
@@ -86,7 +94,26 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             font-weight: 600;
         }
 
-        .content { padding: 30px; width: 100%; }
+        /* --- 3. WRAPPER KONTEN KANAN --- */
+        .main-content {
+            margin-left: 260px; /* Geser konten ke kanan sebesar lebar sidebar */
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 4. NAVBAR STICKY (NEMPEL DI ATAS) --- */
+        .navbar { 
+            background: white; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+            border-bottom: 1px solid #eee;
+            position: sticky;      /* Agar navbar nempel saat discroll */
+            top: 0;
+            z-index: 900;
+        }
+
+        .content { padding: 30px; flex-grow: 1; }
         
         .card { 
             border: none; 
@@ -94,96 +121,81 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
             overflow: hidden;
         }
-
         .card-header.bg-primary {
             background: var(--primary-color) !important; 
-            border-bottom: none;
             padding: 15px 20px;
         }
-
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
-            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.3);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-            border-color: var(--primary-hover);
-        }
-
-        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.02); border-bottom: 1px solid #eee;}
-
-        .sidebar .btn-danger {
-            color: #ffffff !important;
         }
     </style>
 </head>
 <body>
 
-<div class="d-flex">
-    <div class="sidebar p-0" style="width: 260px; flex-shrink: 0;">
-        <div class="brand">
-            <i class="fas fa-book-open me-2 text-primary"></i> PERPUS<span style="color: var(--primary-color);">APP</span>
-        </div>
-        
-        <nav class="mt-2">
-            <div class="menu-label">Menu Utama</div>
-            <a href="../../index.php" class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>">
-                <i class="fas fa-tachometer-alt"></i> Dashboard
-            </a>
-            
-            <div class="menu-label">Master Data</div>
-            <a href="../anggota/list_anggota.php" class="<?= strpos($_SERVER['PHP_SELF'], 'anggota') !== false ? 'active' : '' ?>">
-                <i class="fas fa-users"></i> Data Anggota
-            </a>
-            <a href="../buku/list_buku.php" class="<?= strpos($_SERVER['PHP_SELF'], 'buku') !== false ? 'active' : '' ?>">
-                <i class="fas fa-book"></i> Data Buku
-            </a>
-            
-            <div class="menu-label">Sirkulasi</div>
-            <a href="../transaksi/peminjaman.php" class="<?= strpos($_SERVER['PHP_SELF'], 'peminjaman') !== false ? 'active' : '' ?>">
-                <i class="fas fa-hand-holding"></i> Peminjaman
-            </a>
-            <a href="../transaksi/pengembalian.php" class="<?= strpos($_SERVER['PHP_SELF'], 'pengembalian') !== false ? 'active' : '' ?>">
-                <i class="fas fa-undo"></i> Pengembalian
-            </a>
-            
-            <div class="menu-label">Laporan & Database</div>
-            <a href="../laporan/function_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'function_demo') !== false ? 'active' : '' ?>">
-                <i class="fas fa-code"></i> Function & Procedure
-            </a>
-            <a href="../laporan/views_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'views_demo') !== false ? 'active' : '' ?>">
-                <i class="fas fa-eye"></i> Views Demo
-            </a>
-            <a href="../laporan/materialized_view.php" class="<?= strpos($_SERVER['PHP_SELF'], 'materialized_view') !== false ? 'active' : '' ?>">
-                <i class="fas fa-database"></i> Materialized View
-            </a>
-            <a href="../laporan/sirkulasi.php" class="<?= strpos($_SERVER['PHP_SELF'], 'sirkulasi') !== false ? 'active' : '' ?>">
-                <i class="fas fa-database"></i> Sirkulasi
-            </a>
-            <a href="../laporan/indexing_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'indexing_demo') !== false ? 'active' : '' ?>">
-                <i class="fas fa-bolt"></i> Indexing Demo
-            </a>
-            
-            <div class="mt-5 px-4 pb-4">
-                <a href="../../logout.php" class="btn btn-danger w-100 shadow-sm text-white" style="border-radius: 8px;">
-                    <i class="fas fa-sign-out-alt me-2"></i> Logout
-                </a>
-            </div>
-        </nav>
+<div class="sidebar">
+    <div class="brand">
+        <i class="fas fa-book-open me-2 text-primary"></i> PERPUS<span style="color: var(--primary-color);">APP</span>
     </div>
+    
+    <nav class="mt-2 pb-5">
+        <div class="menu-label">Menu Utama</div>
+        <a href="../../index.php" class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+        
+        <div class="menu-label">Master Data</div>
+        <a href="../anggota/list_anggota.php" class="<?= strpos($_SERVER['PHP_SELF'], 'anggota') !== false ? 'active' : '' ?>">
+            <i class="fas fa-users"></i> Data Anggota
+        </a>
+        <a href="../buku/list_buku.php" class="<?= strpos($_SERVER['PHP_SELF'], 'buku') !== false ? 'active' : '' ?>">
+            <i class="fas fa-book"></i> Data Buku
+        </a>
+        
+        <div class="menu-label">Sirkulasi</div>
+        <a href="../transaksi/peminjaman.php" class="<?= strpos($_SERVER['PHP_SELF'], 'peminjaman.php') !== false ? 'active' : '' ?>">
+            <i class="fas fa-hand-holding"></i> Peminjaman
+        </a>
+        <a href="../transaksi/pengembalian.php" class="<?= strpos($_SERVER['PHP_SELF'], 'pengembalian.php') !== false ? 'active' : '' ?>">
+            <i class="fas fa-undo"></i> Pengembalian
+        </a>
+        
+        <div class="menu-label">Laporan & Database</div>
+        <a href="../laporan/sirkulasi.php" class="<?= basename($_SERVER['PHP_SELF']) == 'sirkulasi.php' ? 'active' : '' ?>">
+            <i class="fas fa-file-invoice-dollar"></i> Laporan Sirkulasi
+        </a>
+        <a href="../laporan/function_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'function_demo.php' ? 'active' : '' ?>">
+            <i class="fas fa-code"></i> Function Demo
+        </a>
+        <a href="../laporan/views_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'views_demo.php' ? 'active' : '' ?>">
+            <i class="fas fa-eye"></i> Views Demo
+        </a>
+        <a href="../laporan/materialized_view.php" class="<?= basename($_SERVER['PHP_SELF']) == 'materialized_view.php' ? 'active' : '' ?>">
+            <i class="fas fa-database"></i> Materialized View
+        </a>
+        <a href="../laporan/indexing_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'indexing_demo.php' ? 'active' : '' ?>">
+            <i class="fas fa-bolt"></i> Indexing Demo
+        </a>
+        
+        <div class="mt-5 px-4 pb-4">
+            <a href="../../logout.php" class="btn btn-danger w-100 shadow-sm text-white" style="border-radius: 8px;">
+            <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </a>
+        </div>
+    </nav>
+</div>
 
-    <div class="w-100">
-        <nav class="navbar navbar-expand-lg py-3 px-4">
-            <div class="container-fluid">
-                <span class="navbar-text text-secondary fw-medium">
-                    <i class="fas fa-calendar-alt me-2"></i> <?= date('d F Y') ?>
-                </span>
-                <span class="navbar-text fw-bold text-dark">
-                    Halo, Administrator <img src="https://ui-avatars.com/api/?name=Admin&background=4361ee&color=fff&rounded=true" width="30" class="ms-2">
-                </span>
-            </div>
-        </nav>
+<div class="main-content">
+    
+    <nav class="navbar navbar-expand-lg py-3 px-4">
+        <div class="container-fluid">
+            <span class="navbar-text text-secondary fw-medium">
+                <i class="fas fa-calendar-alt me-2"></i> <?= date('d F Y') ?>
+            </span>
+            <span class="navbar-text fw-bold text-dark">
+                Halo, Administrator <img src="https://ui-avatars.com/api/?name=Admin&background=4361ee&color=fff&rounded=true" width="30" class="ms-2">
+            </span>
+        </div>
+    </nav>
 
-        <div class="content">
+    <div class="content">
