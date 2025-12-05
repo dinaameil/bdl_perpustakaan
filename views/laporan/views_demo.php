@@ -40,7 +40,6 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
             <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Simple View: Stok Buku Hampir Habis</h5>
         </div>
         <div class="card-body">
-            <p class="text-muted">View sederhana yang menampilkan buku dengan stok kurang dari 5. Data di-refresh otomatis setiap kali diakses.</p>
             
             <?php if(count($simple_view) > 0): ?>
                 <div class="table-responsive">
@@ -92,7 +91,6 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
             <span class="badge bg-light text-dark"><?= count($complex_view) ?> Records</span>
         </div>
         <div class="card-body">
-            <p class="text-muted">View kompleks dengan multiple JOIN (5 tabel) yang menampilkan laporan peminjaman lengkap dengan detail anggota, buku, kategori, penerbit, dan pengembalian.</p>
 
             <!-- Filter & Sorting -->
             <form method="GET" class="row g-3 mb-4 p-3 bg-light rounded">

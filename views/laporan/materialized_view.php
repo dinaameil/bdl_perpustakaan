@@ -54,7 +54,6 @@ $improvement = round((($normal_query_time - $query_time) / $normal_query_time) *
             </form>
         </div>
         <div class="card-body">
-            <p class="text-muted">Data ini diambil dari Materialized View yang menyimpan hasil agregasi secara fisik.</p>
             
             <div class="table-responsive">
                 <table class="table table-hover table-bordered align-middle">

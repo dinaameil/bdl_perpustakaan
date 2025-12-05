@@ -165,13 +165,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             <i class="fas fa-file-invoice-dollar"></i> Laporan Sirkulasi
         </a>
         <a href="../laporan/function_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'function_demo.php' ? 'active' : '' ?>">
-            <i class="fas fa-code"></i> Function Demo
+            <i class="fas fa-code"></i> Cari Buku/Anggota
         </a>
         <a href="../laporan/views_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'views_demo.php' ? 'active' : '' ?>">
-            <i class="fas fa-eye"></i> Views Demo
+            <i class="fas fa-eye"></i> Stok dan Laporan
         </a>
         <a href="../laporan/materialized_view.php" class="<?= basename($_SERVER['PHP_SELF']) == 'materialized_view.php' ? 'active' : '' ?>">
-            <i class="fas fa-database"></i> Materialized View
+            <i class="fas fa-database"></i> Laporan Penerbit
         </a>
         <a href="../laporan/indexing_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'indexing_demo.php' ? 'active' : '' ?>">
             <i class="fas fa-bolt"></i> Indexing Demo

@@ -171,42 +171,4 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
         </div>
     </div>
 
-    <!-- STORED PROCEDURE: Tambah Anggota -->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h6 class="mb-0"><i class="fas fa-database me-2"></i>Stored Procedure: Tambah Anggota Baru</h6>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted">Stored procedure untuk menambahkan anggota baru ke database menggunakan CALL statement.</p>
-                    
-                    <form method="POST" action="">
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label fw-bold">Nomor Anggota</label>
-                                <input type="text" name="nomor_anggota" class="form-control" placeholder="A-XXX" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label fw-bold">Nama Lengkap</label>
-                                <input type="text" name="nama_lengkap" class="form-control" placeholder="Nama lengkap" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label fw-bold">No. Telepon</label>
-                                <input type="text" name="telepon" class="form-control" placeholder="08xxx" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label fw-bold">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="email@example.com" required>
-                            </div>
-                        </div>
-                        <button type="submit" name="tambah_via_sp" class="btn btn-success">
-                            <i class="fas fa-plus-circle me-2"></i>Tambah via Stored Procedure
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
 <?php include '../layouts/footer.php'; ?>
