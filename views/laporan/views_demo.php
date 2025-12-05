@@ -107,10 +107,11 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
                 </div>
                 <div class="col-md-3">
                     <label class="form-label fw-bold">Sort By</label>
-                    <select name="sort" class="form-select">
+                   <select name="sort" class="form-select">
                         <option value="tanggal_pinjam" <?= ($sort_by == 'tanggal_pinjam') ? 'selected' : '' ?>>Tanggal Pinjam</option>
-                        <option value="\"Nama Anggota\"" <?= ($sort_by == '"Nama Anggota"') ? 'selected' : '' ?>>Nama Anggota</option>
-                        <option value="\"Denda\"" <?= ($sort_by == '"Denda"') ? 'selected' : '' ?>>Denda</option>
+                        
+                        <option value='"Nama Anggota"' <?= ($sort_by == '"Nama Anggota"') ? 'selected' : '' ?>>Nama Anggota</option>
+                        <option value='"Denda"' <?= ($sort_by == '"Denda"') ? 'selected' : '' ?>>Denda</option>
                     </select>
                 </div>
                 <div class="col-md-3">

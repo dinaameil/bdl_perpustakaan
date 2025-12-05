@@ -3,7 +3,6 @@ require_once '../../config/database.php';
 include '../layouts/header.php';
 
 try {
-    // Query SAKTI: Gabung 4 Tabel Sekaligus + Cek Status
     // Jika id_pengembalian NULL, berarti BELUM KEMBALI
     $sql = "SELECT p.*, a.nama_lengkap, b.judul, pg.tanggal_kembali
             FROM Peminjaman p
