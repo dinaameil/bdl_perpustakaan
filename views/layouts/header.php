@@ -24,12 +24,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     <style>
         /* --- 1. PALET WARNA --- */
         :root {
-            --sidebar-bg: #0f172a;
-            --sidebar-hover: #1e293b;
-            --primary-color: #4361ee;
-            --primary-hover: #3a0ca3;
+            --sidebar-bg: #00174dff;
+            --sidebar-hover: #6ea1f4ff;
+            --primary-color: #e777a7ff;
+            --primary-hover: #a78ee1ff;
             --bg-light: #f8f9fa;
-            --text-grey: #94a3b8;
+            --text-grey: #fefefeff;
         }
 
         body { 
@@ -88,7 +88,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
         .menu-label {
             font-size: 0.75rem;
             text-transform: uppercase;
-            color: #475569;
+            color: #4690f8ff;
             margin: 25px 25px 10px;
             letter-spacing: 1.5px;
             font-weight: 600;
