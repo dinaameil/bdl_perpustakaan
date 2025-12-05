@@ -68,7 +68,6 @@ include '../layouts/header.php';
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold text-dark mb-1">👥 Data Anggota Perpustakaan</h3>
-            <small class="text-muted">Total: <?= $total_records ?> anggota | Halaman <?= $page ?> dari <?= $total_pages ?></small>
         </div>
         <a href="tambah_anggota.php" class="btn btn-primary shadow-sm">
             <i class="fas fa-user-plus me-2"></i>Daftar Anggota Baru
@@ -91,21 +90,10 @@ include '../layouts/header.php';
                                placeholder="🔍 Cari nama, nomor anggota, atau email..." 
                                value="<?= htmlspecialchars($search) ?>">
                     </div>
-                    <small class="text-muted">Real-time search pada 3 field sekaligus</small>
                 </div>
                 <div class="col-md-6 text-end">
                     <!-- Toggle Show/Hide Deleted -->
-                    <div class="form-check form-switch d-inline-block me-3">
-                        <input class="form-check-input" 
-                               type="checkbox" 
-                               id="showDeleted" 
-                               <?= $show_deleted ? 'checked' : '' ?>
-                               onchange="toggleDeleted(this)">
-                        <label class="form-check-label" for="showDeleted">
-                            Tampilkan data yang dihapus
-                        </label>
-                    </div>
-                    <span id="searchStatus" class="badge bg-secondary">Siap mencari...</span>
+                    
                 </div>
             </div>
 
@@ -216,14 +204,6 @@ include '../layouts/header.php';
             <?php endif; ?>
 
         </div>
-    </div>
-
-    <!-- Info Box -->
-    <div class="alert alert-info mt-3">
-        <strong><i class="fas fa-info-circle me-2"></i>Tentang Soft Delete:</strong><br>
-        • <strong>Soft Delete:</strong> Data tidak benar-benar dihapus, hanya ditandai dengan timestamp <code>deleted_at</code><br>
-        • <strong>Restore:</strong> Data yang di-soft delete bisa dikembalikan<br>
-        • <strong>Permanent Delete:</strong> Menghapus data secara permanen dari database (tidak bisa dikembalikan)
     </div>
 </div>
 

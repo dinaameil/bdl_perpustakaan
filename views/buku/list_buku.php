@@ -53,7 +53,6 @@ include '../layouts/header.php';
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold text-dark mb-1">📚 Daftar Koleksi Buku</h3>
-            <small class="text-muted">Total: <?= $total_records ?> buku | Halaman <?= $page ?> dari <?= $total_pages ?></small>
         </div>
         <a href="tambah_buku.php" class="btn btn-primary shadow-sm">
             <i class="fas fa-plus me-2"></i>Tambah Buku
@@ -76,10 +75,6 @@ include '../layouts/header.php';
                                placeholder="🔍 Cari berdasarkan judul atau pengarang..." 
                                value="<?= htmlspecialchars($search) ?>">
                     </div>
-                    <small class="text-muted">Real-time search: ketik langsung, hasil otomatis muncul</small>
-                </div>
-                <div class="col-md-6 text-end">
-                    <span id="searchStatus" class="badge bg-secondary">Siap mencari...</span>
                 </div>
             </div>
 

@@ -138,11 +138,6 @@ $recent = $pdo->query($sql_recent)->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
-            
-            <div class="alert alert-info border-0 shadow-sm">
-                <small class="fw-bold"><i class="fas fa-info-circle me-1"></i> Info Sistem</small><br>
-                <small>Sistem Perpustakaan ini menggunakan Database PostgreSQL dengan fitur Transaction Management.</small>
-            </div>
         </div>
     </div>
 
