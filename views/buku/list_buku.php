@@ -54,7 +54,10 @@ include '../layouts/header.php';
         <div>
             <h3 class="fw-bold text-dark mb-1">📚 Daftar Koleksi Buku</h3>
         </div>
-        <a href="tambah_buku.php" class="btn btn-primary shadow-sm">
+        <a href="tambah_buku.php" class="btn btn-primary shadow-sm"
+           style="background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; transition: all 0.3s ease;"
+           onmouseover="this.style.backgroundColor='#d6669a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 119, 167, 0.4)';"
+           onmouseout="this.style.backgroundColor='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)';">
             <i class="fas fa-plus me-2"></i>Tambah Buku
         </a>
     </div>
@@ -115,7 +118,7 @@ include '../layouts/header.php';
                                 <td><?= htmlspecialchars($buku['nama_penerbit']) ?></td>
                                 <td class="text-center">
                                     <?php if($buku['jumlah_stok'] < 5): ?>
-                                        <span class="badge bg-danger"><?= $buku['jumlah_stok'] ?> (Habis)</span>
+                                        <span class="badge bg-danger"><?= $buku['jumlah_stok'] ?></span>
                                     <?php else: ?>
                                         <span class="badge bg-success"><?= $buku['jumlah_stok'] ?></span>
                                     <?php endif; ?>
@@ -134,7 +137,11 @@ include '../layouts/header.php';
                             <tr>
                                 <td colspan="7" class="text-center text-muted py-4">
                                     <i class="fas fa-search fa-3x mb-3 d-block"></i>
-                                    Tidak ada buku ditemukan untuk "<?= htmlspecialchars($search) ?>"
+                                    <?php if($search): ?>
+                                        Tidak ada buku ditemukan untuk "<?= htmlspecialchars($search) ?>"
+                                    <?php else: ?>
+                                        Tidak ada data buku
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endif; ?>
@@ -212,33 +219,18 @@ function debounce(func, delay) {
 
 // Real-time search handler
 const searchInput = document.getElementById('searchInput');
-const searchStatus = document.getElementById('searchStatus');
 const loadingIndicator = document.getElementById('loadingIndicator');
 
 searchInput.addEventListener('input', debounce(function(e) {
     const searchTerm = e.target.value.trim();
     
-    // Update status
-    searchStatus.className = 'badge bg-warning';
-    searchStatus.textContent = 'Mencari...';
-    
     // Show loading
     loadingIndicator.style.display = 'block';
     
     // Redirect dengan parameter search (auto refresh halaman)
-    const currentPage = <?= $page ?>;
     window.location.href = `?page=1&search=${encodeURIComponent(searchTerm)}`;
     
 }, 800)); // Tunggu 800ms setelah user berhenti mengetik
-
-// Update status saat halaman load
-window.addEventListener('load', function() {
-    const searchValue = searchInput.value.trim();
-    if(searchValue) {
-        searchStatus.className = 'badge bg-success';
-        searchStatus.textContent = `Hasil untuk: "${searchValue}"`;
-    }
-});
 </script>
 
 <style>

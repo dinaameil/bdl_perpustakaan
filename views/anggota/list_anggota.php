@@ -69,7 +69,10 @@ include '../layouts/header.php';
         <div>
             <h3 class="fw-bold text-dark mb-1">👥 Data Anggota Perpustakaan</h3>
         </div>
-        <a href="tambah_anggota.php" class="btn btn-primary shadow-sm">
+        <a href="tambah_anggota.php" class="btn btn-primary shadow-sm"
+           style="background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; transition: all 0.3s ease;"
+           onmouseover="this.style.backgroundColor='#d6669a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 119, 167, 0.4)';"
+           onmouseout="this.style.backgroundColor='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)';">
             <i class="fas fa-user-plus me-2"></i>Daftar Anggota Baru
         </a>
     </div>
@@ -220,34 +223,25 @@ function debounce(func, delay) {
 
 // Real-time search
 const searchInput = document.getElementById('searchInput');
-const searchStatus = document.getElementById('searchStatus');
 const loadingIndicator = document.getElementById('loadingIndicator');
 
 searchInput.addEventListener('input', debounce(function(e) {
     const searchTerm = e.target.value.trim();
-    searchStatus.className = 'badge bg-warning';
-    searchStatus.textContent = 'Mencari...';
     loadingIndicator.style.display = 'block';
     
-    const showDeleted = document.getElementById('showDeleted').checked ? '&show_deleted=1' : '';
+    // Cek apakah ada checkbox showDeleted, jika tidak ada maka kosongkan
+    const showDeletedCheckbox = document.getElementById('showDeleted');
+    const showDeleted = (showDeletedCheckbox && showDeletedCheckbox.checked) ? '&show_deleted=1' : '';
+    
     window.location.href = `?page=1&search=${encodeURIComponent(searchTerm)}${showDeleted}`;
 }, 800));
 
-// Toggle show deleted
+// Toggle show deleted (jika ada checkbox-nya)
 function toggleDeleted(checkbox) {
     const searchTerm = searchInput.value.trim();
     const showDeleted = checkbox.checked ? '&show_deleted=1' : '';
     window.location.href = `?page=1&search=${encodeURIComponent(searchTerm)}${showDeleted}`;
 }
-
-// Update status on load
-window.addEventListener('load', function() {
-    const searchValue = searchInput.value.trim();
-    if(searchValue) {
-        searchStatus.className = 'badge bg-success';
-        searchStatus.textContent = `Hasil untuk: "${searchValue}"`;
-    }
-});
 </script>
 
 <?php include '../layouts/footer.php'; ?>

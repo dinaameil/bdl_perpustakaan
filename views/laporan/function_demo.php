@@ -57,6 +57,33 @@ if(isset($_POST['tambah_via_sp'])) {
 $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER BY nama_lengkap")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+<style>
+/* Hover effect untuk tombol Hitung Total Denda - Pink Theme */
+.btn-hitung-denda {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+}
+
+.btn-hitung-denda:hover {
+    background-color: #d6669a !important; /* Pink lebih gelap */
+    border-color: #d6669a !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 119, 167, 0.4);
+}
+
+/* Hover effect untuk tombol Cari Buku - Info Theme */
+.btn-cari-buku {
+    transition: all 0.3s ease;
+}
+
+.btn-cari-buku:hover {
+    background-color: #5bc0de !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+}
+</style>
+
 <div class="container-fluid">
     <h3 class="fw-bold text-dark mb-4">🔧 Demonstrasi Function & Stored Procedure</h3>
 
@@ -96,7 +123,7 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <button type="submit" name="cek_denda" class="btn btn-primary w-100">
+                        <button type="submit" name="cek_denda" class="btn btn-primary btn-hitung-denda w-100">
                             <i class="fas fa-calculator me-2"></i>Hitung Total Denda
                         </button>
                     </form>
@@ -128,7 +155,7 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
                             <input type="text" name="pengarang" class="form-control" placeholder="Contoh: Andrea Hirata" 
                                    value="<?= isset($_POST['pengarang']) ? htmlspecialchars($_POST['pengarang']) : '' ?>" required>
                         </div>
-                        <button type="submit" name="cari_buku" class="btn btn-info w-100 text-white">
+                        <button type="submit" name="cari_buku" class="btn btn-info btn-cari-buku w-100 text-white">
                             <i class="fas fa-search me-2"></i>Cari Buku
                         </button>
                     </form>

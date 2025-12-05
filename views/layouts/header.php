@@ -165,7 +165,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             <i class="fas fa-file-invoice-dollar"></i> Laporan Sirkulasi
         </a>
         <a href="../laporan/function_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'function_demo.php' ? 'active' : '' ?>">
-            <i class="fas fa-code"></i> Cari Buku/Anggota
+            <i class="fas fa-search"></i> Cari Buku/Anggota
         </a>
         <a href="../laporan/views_demo.php" class="<?= basename($_SERVER['PHP_SELF']) == 'views_demo.php' ? 'active' : '' ?>">
             <i class="fas fa-eye"></i> Stok dan Laporan

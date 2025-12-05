@@ -58,7 +58,10 @@ try {
                     <input type="text" name="judul_cari" class="form-control" value="<?= htmlspecialchars($search_term) ?>" placeholder="Masukkan judul buku...">
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary"
+                            style="background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; transition: all 0.3s ease;"
+                            onmouseover="this.style.backgroundColor='#d6669a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 119, 167, 0.4)';"
+                            onmouseout="this.style.backgroundColor='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                         <i class="fas fa-play me-2"></i>Jalankan Test
                     </button>
                 </div>

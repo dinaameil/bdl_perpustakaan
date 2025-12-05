@@ -124,7 +124,10 @@ include '../layouts/header.php';
                     </div>
 
                     <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg shadow">
+                        <button type="submit" class="btn btn-primary btn-lg shadow"
+                                style="background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; transition: all 0.3s ease;"
+                                onmouseover="this.style.backgroundColor='#d6669a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 119, 167, 0.4)';"
+                                onmouseout="this.style.backgroundColor='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.2)';">
                             <i class="fas fa-save me-2"></i>Proses Peminjaman
                         </button>
                         <a href="peminjaman.php" class="btn btn-secondary">Batal</a>

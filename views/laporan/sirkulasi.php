@@ -57,6 +57,28 @@ try {
 }
 ?>
 
+<style>
+/* Hover effect untuk tombol Tampilkan - Pink Theme */
+.btn-tampilkan {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+}
+
+.btn-tampilkan:hover {
+    background-color: #d6669a !important; /* Pink lebih gelap */
+    border-color: #d6669a !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 119, 167, 0.4);
+}
+
+/* Focus state untuk select dropdown */
+.form-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(231, 119, 167, 0.25) !important;
+}
+</style>
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold text-dark"><i class="fas fa-file-invoice-dollar me-2"></i>Laporan Sirkulasi & Denda</h3>
@@ -84,7 +106,7 @@ try {
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">
+                    <button type="submit" class="btn btn-primary btn-tampilkan w-100">
                         <i class="fas fa-filter me-2"></i>Tampilkan
                     </button>
                 </div>
