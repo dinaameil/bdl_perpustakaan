@@ -209,35 +209,4 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
         </div>
     </div>
 
-    <!-- Penjelasan Teknis -->
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card border-info">
-                <div class="card-header bg-light">
-                    <h6 class="mb-0 text-info"><i class="fas fa-info-circle me-2"></i>Penjelasan Teknis</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h6 class="fw-bold">Function Scalar</h6>
-                            <p class="small text-muted">Function yang mengembalikan single value (scalar). Dipanggil dengan SELECT.</p>
-                            <code>SELECT hitung_total_denda_anggota(1);</code>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="fw-bold">Function Table</h6>
-                            <p class="small text-muted">Function yang mengembalikan tabel. Bisa digunakan seperti tabel biasa.</p>
-                            <code>SELECT * FROM cari_buku_by_pengarang('Andrea');</code>
-                        </div>
-                        <div class="col-md-4">
-                            <h6 class="fw-bold">Stored Procedure</h6>
-                            <p class="small text-muted">Prosedur yang dapat melakukan INSERT/UPDATE/DELETE. Dipanggil dengan CALL.</p>
-                            <code>CALL tambah_anggota_baru('A-99', ...);</code>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <?php include '../layouts/footer.php'; ?>

@@ -159,6 +159,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             <a href="../laporan/materialized_view.php" class="<?= strpos($_SERVER['PHP_SELF'], 'materialized_view') !== false ? 'active' : '' ?>">
                 <i class="fas fa-database"></i> Materialized View
             </a>
+            <a href="../laporan/sirkulasi.php" class="<?= strpos($_SERVER['PHP_SELF'], 'sirkulasi') !== false ? 'active' : '' ?>">
+                <i class="fas fa-database"></i> Sirkulasi
+            </a>
             <a href="../laporan/indexing_demo.php" class="<?= strpos($_SERVER['PHP_SELF'], 'indexing_demo') !== false ? 'active' : '' ?>">
                 <i class="fas fa-bolt"></i> Indexing Demo
             </a>

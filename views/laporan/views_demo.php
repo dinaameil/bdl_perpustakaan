@@ -82,12 +82,6 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
                     <i class="fas fa-check-circle me-2"></i>Semua buku memiliki stok yang cukup!
                 </div>
             <?php endif; ?>
-
-            <div class="alert alert-info mt-3 mb-0">
-                <strong>💡 Penjelasan Simple View:</strong><br>
-                <code>CREATE VIEW view_stok_buku_hampir_habis AS SELECT ... WHERE jumlah_stok < 5</code><br>
-                View ini menyederhanakan query yang sering digunakan untuk monitoring stok buku.
-            </div>
         </div>
     </div>
 
@@ -186,58 +180,8 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
                     </tbody>
                 </table>
             </div>
-
-            <div class="alert alert-info mt-3 mb-0">
-                <strong>💡 Penjelasan Complex View:</strong><br>
-                <code>CREATE VIEW view_laporan_peminjaman_lengkap AS SELECT ... (JOIN 5 tables)</code><br>
-                View ini menggabungkan data dari tabel: Peminjaman, Anggota, Buku, Penerbit, Kategori_Buku, dan Pengembalian. 
-                Sangat berguna untuk laporan lengkap tanpa perlu menulis query JOIN yang panjang setiap kali.
-            </div>
         </div>
     </div>
 
-    <!-- Perbandingan View vs Query Biasa -->
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="card border-success">
-                <div class="card-header bg-light">
-                    <h6 class="mb-0 text-success"><i class="fas fa-lightbulb me-2"></i>Keuntungan Menggunakan Views</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="text-center p-3">
-                                <i class="fas fa-code fa-2x text-primary mb-2"></i>
-                                <h6 class="fw-bold">Simplifikasi Query</h6>
-                                <p class="small text-muted">Query kompleks jadi lebih sederhana</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="text-center p-3">
-                                <i class="fas fa-shield-alt fa-2x text-success mb-2"></i>
-                                <h6 class="fw-bold">Security Layer</h6>
-                                <p class="small text-muted">Sembunyikan struktur tabel asli</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="text-center p-3">
-                                <i class="fas fa-recycle fa-2x text-info mb-2"></i>
-                                <h6 class="fw-bold">Reusability</h6>
-                                <p class="small text-muted">Bisa dipakai berulang kali</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="text-center p-3">
-                                <i class="fas fa-wrench fa-2x text-warning mb-2"></i>
-                                <h6 class="fw-bold">Maintainability</h6>
-                                <p class="small text-muted">Mudah diupdate di satu tempat</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php include '../layouts/footer.php'; ?>

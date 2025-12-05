@@ -1,48 +1,57 @@
 <?php
 require_once '../../config/database.php';
 
-// Ambil data untuk Dropdown
+// --- BAGIAN 1: PERSIAPAN DATA ---
+
+// Ambil data untuk Dropdown Anggota
 $anggota = $pdo->query("SELECT * FROM Anggota ORDER BY nama_lengkap ASC")->fetchAll(PDO::FETCH_ASSOC);
-// Hanya tampilkan buku yang STOK-nya > 0 (Validasi Stok) [cite: 69]
+
+// Ambil data Buku (Hanya yang stoknya > 0)
 $buku = $pdo->query("SELECT * FROM Buku WHERE jumlah_stok > 0 ORDER BY judul ASC")->fetchAll(PDO::FETCH_ASSOC);
 
-// PROSES SAAT TOMBOL DISUBMIT
+// --- BAGIAN 2: PROSES TRANSAKSI (POINT 6 TUGAS AKHIR) ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
-        // 1. MULAI TRANSAKSI 
+        // 1. MULAI TRANSAKSI (BEGIN)
+        // Database menahan perubahan sementara, belum disimpan permanen
         $pdo->beginTransaction();
 
+        // Ambil Input
         $id_anggota = $_POST['id_anggota'];
         $id_buku = $_POST['id_buku'];
         $tgl_pinjam = $_POST['tanggal_pinjam'];
         $jatuh_tempo = $_POST['jatuh_tempo'];
 
-        // 2. Cek Stok Lagi (Untuk keamanan ganda / concurrency)
+        // 2. CEK STOK (Validasi Business Rules)
+        // Kita cek lagi stoknya untuk memastikan tidak ada race condition
         $stmtCek = $pdo->prepare("SELECT jumlah_stok FROM Buku WHERE id_buku = ?");
         $stmtCek->execute([$id_buku]);
         $stokSekarang = $stmtCek->fetchColumn();
 
         if ($stokSekarang < 1) {
+            // Jika stok habis, lempar Error agar masuk ke block catch (Rollback)
             throw new Exception("Stok buku habis! Transaksi dibatalkan.");
         }
 
-        // 3. Insert ke Tabel Peminjaman
+        // 3. INSERT KE TABEL PEMINJAMAN
         $sqlPinjam = "INSERT INTO Peminjaman (id_anggota, id_buku, tanggal_pinjam, jatuh_tempo) 
                       VALUES (:anggota, :buku, :tgl, :tempo)";
-        $stmt = $pdo->prepare($sqlPinjam);
-        $stmt->execute([
+        $stmtInsert = $pdo->prepare($sqlPinjam);
+        $stmtInsert->execute([
             ':anggota' => $id_anggota,
             ':buku' => $id_buku,
             ':tgl' => $tgl_pinjam,
             ':tempo' => $jatuh_tempo
         ]);
 
-        // 4. Update Stok Buku (Kurangi 1) - Ini implementasi DML Lanjut
+        // 4. UPDATE STOK BUKU (Kurangi 1)
+        // Ini adalah implementasi "Transaksi Complex" (Insert + Update)
         $sqlUpdate = "UPDATE Buku SET jumlah_stok = jumlah_stok - 1 WHERE id_buku = :id";
         $stmtUpdate = $pdo->prepare($sqlUpdate);
         $stmtUpdate->execute([':id' => $id_buku]);
 
-        // 5. COMMIT (Simpan Permanen)
+        // 5. SIMPAN PERMANEN (COMMIT)
+        // Jika langkah 2, 3, dan 4 sukses semua, baru simpan ke database
         $pdo->commit();
 
         echo "<script>
@@ -51,7 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </script>";
 
     } catch (Exception $e) {
-        // 6. ROLLBACK (Batalkan SEMUA jika ada error) [cite: 44]
+        // 6. BATALKAN SEMUA (ROLLBACK)
+        // Jika ada error di langkah manapun (stok habis atau error query),
+        // kembalikan database ke kondisi semula.
         $pdo->rollBack();
         $error = "Transaksi Gagal: " . $e->getMessage();
     }
@@ -69,7 +80,9 @@ include '../layouts/header.php';
             <div class="card-body p-4">
                 
                 <?php if(isset($error)): ?>
-                    <div class="alert alert-danger"><i class="fas fa-exclamation-triangle me-2"></i><?= $error ?></div>
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i><?= $error ?>
+                    </div>
                 <?php endif; ?>
 
                 <form method="POST" action="">
