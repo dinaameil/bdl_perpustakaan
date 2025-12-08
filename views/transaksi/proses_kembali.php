@@ -75,7 +75,7 @@ include '../layouts/header.php';
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card shadow">
-            <div class="card-header bg-success text-white">
+            <div class="card-header bg-primary text-white">
                 <h5 class="mb-0"><i class="fas fa-check-circle me-2"></i>Konfirmasi Pengembalian</h5>
             </div>
             <div class="card-body p-4">
@@ -117,7 +117,10 @@ include '../layouts/header.php';
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-success btn-lg">
+                        <button type="submit" class="btn btn-primary btn-lg"
+                                style="background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; transition: all 0.3s ease;"
+                                onmouseover="this.style.backgroundColor='#d6669a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 119, 167, 0.4)';"
+                                onmouseout="this.style.backgroundColor='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
                             <i class="fas fa-save me-2"></i>Proses Kembali
                         </button>
                         <a href="peminjaman.php" class="btn btn-secondary">Batal</a>

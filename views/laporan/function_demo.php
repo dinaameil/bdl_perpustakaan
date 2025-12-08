@@ -106,10 +106,9 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-primary text-white">
-                    <h6 class="mb-0"><i class="fas fa-function me-2"></i>Function 1: Hitung Total Denda Anggota</h6>
+                    <h6 class="mb-0"><i class="fas fa-function me-2"></i>Hitung Total Denda Anggota</h6>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted small">Function scalar yang menghitung total denda keterlambatan dari seorang anggota.</p>
                     
                     <form method="POST" action="">
                         <div class="mb-3">
@@ -144,11 +143,9 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm h-100">
                 <div class="card-header bg-info text-white">
-                    <h6 class="mb-0"><i class="fas fa-search me-2"></i>Function 2: Cari Buku by Pengarang</h6>
+                    <h6 class="mb-0"><i class="fas fa-search me-2"></i>Cari Buku by Pengarang</h6>
                 </div>
-                <div class="card-body">
-                    <p class="text-muted small">Function yang mengembalikan tabel hasil pencarian buku berdasarkan nama pengarang.</p>
-                    
+                <div class="card-body">                    
                     <form method="POST" action="">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nama Pengarang</label>

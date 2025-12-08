@@ -37,7 +37,7 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
     <!-- SIMPLE VIEW -->
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-warning text-dark">
-            <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Simple View: Stok Buku Hampir Habis</h5>
+            <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Stok Buku Hampir Habis</h5>
         </div>
         <div class="card-body">
             
@@ -87,7 +87,7 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
     <!-- COMPLEX VIEW -->
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Complex View: Laporan Peminjaman Lengkap</h5>
+            <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Laporan Peminjaman Lengkap</h5>
             <span class="badge bg-light text-dark"><?= count($complex_view) ?> Records</span>
         </div>
         <div class="card-body">
@@ -97,7 +97,7 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Filter Kategori</label>
                     <select name="kategori" class="form-select">
-                        <option value="">-- Semua Kategori --</option>
+                        <option value=""> Semua Kategori</option>
                         <?php foreach($kategori_list as $kat): ?>
                             <option value="<?= $kat ?>" <?= ($filter_kategori == $kat) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($kat) ?>
