@@ -122,7 +122,7 @@ $recent = $pdo->query($sql_recent)->fetchAll(PDO::FETCH_ASSOC);
         <div class="col-md-4">
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-white py-3">
-                    <h6 class="m-0 fw-bold text-primary"><i class="fas fa-bolt me-2"></i>Aksi Cepat</h6>
+                    <h6 class="m-0 fw-bold text-primary"></i>Pintasan</h6>
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-3">

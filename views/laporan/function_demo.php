@@ -36,23 +36,6 @@ if(isset($_POST['cari_buku'])) {
     }
 }
 
-// 3. STORED PROCEDURE: Tambah Anggota Baru
-if(isset($_POST['tambah_via_sp'])) {
-    try {
-        $sql = "CALL tambah_anggota_baru(:no, :nama, :telp, :email)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':no' => $_POST['nomor_anggota'],
-            ':nama' => $_POST['nama_lengkap'],
-            ':telp' => $_POST['telepon'],
-            ':email' => $_POST['email']
-        ]);
-        $success_sp = "✅ Anggota berhasil ditambahkan via Stored Procedure!";
-    } catch(PDOException $e) {
-        $error = "Error Stored Procedure: " . $e->getMessage();
-    }
-}
-
 // Ambil data untuk dropdown
 $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER BY nama_lengkap")->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -85,7 +68,7 @@ $anggota_list = $pdo->query("SELECT id_anggota, nama_lengkap FROM Anggota ORDER 
 </style>
 
 <div class="container-fluid">
-    <h3 class="fw-bold text-dark mb-4">🔧 Demonstrasi Function & Stored Procedure</h3>
+    <h3 class="fw-bold text-dark mb-4">🔧 Function & Stored Procedure</h3>
 
     <?php if($error): ?>
         <div class="alert alert-danger alert-dismissible fade show">

@@ -32,7 +32,7 @@ $kategori_list = $pdo->query("SELECT DISTINCT nama_kategori FROM Kategori_Buku O
 ?>
 
 <div class="container-fluid">
-    <h3 class="fw-bold text-dark mb-4">📊 Demonstrasi Database Views</h3>
+    <h3 class="fw-bold text-dark mb-4">📊 Data Stok Buku</h3>
 
     <!-- SIMPLE VIEW -->
     <div class="card shadow-sm mb-4">
