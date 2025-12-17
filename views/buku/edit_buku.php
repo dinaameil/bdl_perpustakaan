@@ -8,6 +8,7 @@ if (!isset($_GET['id'])) {
 }
 
 $id_buku = $_GET['id'];
+$message = '';
 
 // 2. Ambil data buku yang mau diedit
 $stmt = $pdo->prepare("SELECT * FROM Buku WHERE id_buku = :id");
@@ -19,8 +20,8 @@ if (!$buku) {
 }
 
 // 3. Ambil data dropdown (Penerbit & Kategori)
-$penerbit = $pdo->query("SELECT * FROM Penerbit")->fetchAll(PDO::FETCH_ASSOC);
-$kategori = $pdo->query("SELECT * FROM Kategori_Buku")->fetchAll(PDO::FETCH_ASSOC);
+$penerbit = $pdo->query("SELECT id_penerbit, nama_penerbit FROM Penerbit ORDER BY nama_penerbit ASC")->fetchAll(PDO::FETCH_ASSOC);
+$kategori = $pdo->query("SELECT id_kategori, nama_kategori FROM Kategori_Buku ORDER BY nama_kategori ASC")->fetchAll(PDO::FETCH_ASSOC);
 
 // 4. Proses Update saat tombol Simpan ditekan
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -47,54 +48,94 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ':id' => $id_buku
         ]);
 
-        header("Location: list_buku.php");
-        exit();
+        echo "<script>alert('Data buku berhasil diupdate!'); window.location='list_buku.php';</script>";
+
     } catch (PDOException $e) {
-        echo "Gagal update data: " . $e->getMessage();
+        $error = "Gagal update data: " . $e->getMessage();
     }
 }
+
+include '../layouts/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<body>
-    <h2>Edit Data Buku</h2>
-    <form method="POST" action="">
-        <label>Judul Buku:</label><br>
-        <input type="text" name="judul" value="<?= htmlspecialchars($buku['judul']) ?>" required><br><br>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Data Buku</h5>
+            </div>
+            <div class="card-body p-4">
+                
+                <?php if(isset($error)): ?>
+                    <div class="alert alert-danger"><?= $error ?></div>
+                <?php endif; ?>
 
-        <label>Pengarang:</label><br>
-        <input type="text" name="pengarang" value="<?= htmlspecialchars($buku['pengarang']) ?>" required><br><br>
+                <form method="POST" action="">
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Judul Buku</label>
+                            <input type="text" name="judul" class="form-control" value="<?= htmlspecialchars($buku['judul']) ?>" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Pengarang</label>
+                            <input type="text" name="pengarang" class="form-control" value="<?= htmlspecialchars($buku['pengarang']) ?>" required>
+                        </div>
+                    </div>
 
-        <label>ISBN:</label><br>
-        <input type="text" name="isbn" value="<?= htmlspecialchars($buku['isbn']) ?>"><br><br>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">ISBN</label>
+                            <input type="text" name="isbn" class="form-control" value="<?= htmlspecialchars($buku['isbn']) ?>">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Tahun Terbit</label>
+                            <input type="number" name="tahun_terbit" class="form-control" value="<?= htmlspecialchars($buku['tahun_terbit']) ?>">
+                        </div>
+                    </div>
 
-        <label>Tahun Terbit:</label><br>
-        <input type="number" name="tahun_terbit" value="<?= htmlspecialchars($buku['tahun_terbit']) ?>"><br><br>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Stok</label>
+                        <input type="number" name="jumlah_stok" class="form-control" value="<?= htmlspecialchars($buku['jumlah_stok']) ?>" required>
+                    </div>
 
-        <label>Stok:</label><br>
-        <input type="number" name="jumlah_stok" value="<?= htmlspecialchars($buku['jumlah_stok']) ?>" required><br><br>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Penerbit</label>
+                        <select name="id_penerbit" class="form-select" required>
+                            <option value="">-- Pilih Penerbit --</option>
+                            <?php foreach($penerbit as $p): ?>
+                                <option value="<?= $p['id_penerbit'] ?>" <?= ($p['id_penerbit'] == $buku['id_penerbit']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($p['nama_penerbit']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-        <label>Penerbit:</label><br>
-        <select name="id_penerbit" required>
-            <?php foreach($penerbit as $p): ?>
-                <option value="<?= $p['id_penerbit'] ?>" <?= ($p['id_penerbit'] == $buku['id_penerbit']) ? 'selected' : '' ?>>
-                    <?= $p['nama_penerbit'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select><br><br>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Kategori</label>
+                        <select name="id_kategori" class="form-select" required>
+                            <option value="">-- Pilih Kategori --</option>
+                            <?php foreach($kategori as $k): ?>
+                                <option value="<?= $k['id_kategori'] ?>" <?= ($k['id_kategori'] == $buku['id_kategori']) ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($k['nama_kategori']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg shadow"
+                                style="background-color: var(--primary-color) !important; border-color: var(--primary-color) !important; transition: all 0.3s ease;"
+                                onmouseover="this.style.backgroundColor='#d6669a'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(231, 119, 167, 0.4)';"
+                                onmouseout="this.style.backgroundColor='var(--primary-color)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.2)';">
+                            <i class="fas fa-save me-2"></i>Update Buku
+                        </button>
+                        <a href="list_buku.php" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <label>Kategori:</label><br>
-        <select name="id_kategori" required>
-            <?php foreach($kategori as $k): ?>
-                <option value="<?= $k['id_kategori'] ?>" <?= ($k['id_kategori'] == $buku['id_kategori']) ? 'selected' : '' ?>>
-                    <?= $k['nama_kategori'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select><br><br>
-
-        <button type="submit">Update Buku</button>
-        <a href="list_buku.php">Batal</a>
-    </form>
-</body>
-</html>
+<?php include '../layouts/footer.php'; ?>

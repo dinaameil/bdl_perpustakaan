@@ -13,7 +13,6 @@ $stmt = $pdo->query("SELECT COUNT(*) FROM Anggota");
 $total_anggota = $stmt->fetchColumn();
 
 // 3. Hitung Peminjaman yang Sedang Aktif (Belum kembali)
-// Logic: Cari data di Peminjaman yang ID-nya TIDAK ADA di tabel Pengembalian
 $stmt = $pdo->query("SELECT COUNT(*) FROM Peminjaman p 
                      LEFT JOIN Pengembalian pg ON p.id_peminjaman = pg.id_peminjaman 
                      WHERE pg.id_pengembalian IS NULL");

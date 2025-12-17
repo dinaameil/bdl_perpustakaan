@@ -3,7 +3,7 @@ require_once '../../config/database.php';
 
 // --- BAGIAN 1: LOGIC PHP ---
 
-// 1. Ambil data Penerbit & Kategori dari Database (INI YANG TADI HILANG)
+// 1. Ambil data Penerbit & Kategori dari Database 
 try {
     $penerbit = $pdo->query("SELECT * FROM Penerbit ORDER BY nama_penerbit ASC")->fetchAll(PDO::FETCH_ASSOC);
     $kategori = $pdo->query("SELECT * FROM Kategori_Buku ORDER BY nama_kategori ASC")->fetchAll(PDO::FETCH_ASSOC);
